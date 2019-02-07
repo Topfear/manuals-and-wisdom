@@ -1,0 +1,8 @@
+Показать миграции
+manage showmigrations someApp
+
+Фэйкануть миграцию без SQL
+manage migrate --fake someApp migrnumber(0003)
+
+Создать пустую миграцию с именем
+manage.bat makemigrations someApp --empty --name someName
