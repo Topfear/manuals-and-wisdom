@@ -1,0 +1,55 @@
+Конфигурация сервера: Ubuntu 16.04 x86_64
+sudo passwd
+
+sudo apt-get update
+sudo apt-get install python3-venv
+sudo apt-get install git
+cd /home
+python3 -m venv venv
+source venv/bin/activate
+
+# optional
+sudo apt install software-properties-common
+sudo add-apt-repository ppa:jonathonf/python-3.6
+sudo apt-get update
+sudo apt-get install python3.6
+# end optional
+
+apt-get install build-essential python
+apt-get install python3-dev
+sudo apt-get install nginx
+
+
+pip install virtualenv
+virtualenv --python=/usr/bin/python3.6 /home/venv
+source venv2/bin/activate
+sudo apt-get install python3.6-dev
+pip install uwsgi
+pip install Django==1.11.2
+pip install djangorestframework==3.7.7
+pip install Pyrebase==3.0.27
+pip install firebase-admin==2.9.0
+pip install coreapi==2.3.3
+pip install Markdown==2.6.11
+
+uwsgi --http :8000 --module config.wsgi
+ 
+git clone https://github.com/Topfear/purebase.git
+
+# команды
+sudo /etc/init.d/nginx restart
+uwsgi --ini /home/purebasemysite_uwsgi.ini
+
+# режим Императора
+sudo mkdir /etc/uwsgi
+sudo mkdir /etc/uwsgi/vassals
+sudo ln -s /home/purebase/mysite_uwsgi.ini /etc/uwsgi/vassals/
+
+sudo uwsgi --emperor /etc/uwsgi/vassals --uid root --gid root
+
+В файл /etc/rc.local, перед строкой “exit 0” добавляем:
+/usr/local/bin/uwsgi --emperor /etc/uwsgi/vassals --uid root --gid root
+
+
+# deploy
+python3 manage.py check --deploy
